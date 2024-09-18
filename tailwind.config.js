@@ -13,6 +13,11 @@ export default {
         bgDark: "#1A1F24",
         bgDarkest: "#060A0D",
         bgDarker: "#33353A",
+        glassLight: "rgba(255, 122, 15, 0.1);", // Glass background color
+        glassBorder: "rgba(255, 255, 255, 0.2)", // Border for glass effect
+      },
+      backdropBlur: {
+        lg: "12px", // Blur amount for glassmorphism
       },
     },
   },

@@ -1,37 +1,36 @@
 import React from "react";
-import { FaHome, FaCompass, FaChartLine, FaUser } from "react-icons/fa";
+import { FaHome, FaRunning, FaHandSpock, FaUser } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+
+const navItems = [
+  { href: "/", icon: <FaHome size={24} />, label: "Home" },
+  { href: "#explore", icon: <FaRunning size={24} />, label: "Explore" },
+  { href: "#myplan", icon: <FaHandSpock size={24} />, label: "MyPlan" },
+  { href: "#profile", icon: <FaUser size={24} />, label: "Profile" },
+];
 
 const Navbar = () => {
   return (
-    <nav className="fixed left-4 right-4 bottom-4 md:top-4 md:bottom-auto md:left-4 md:right-4 z-50">
-      <div className="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg shadow-lg rounded-full flex justify-around py-4 px-6 md:px-8 mx-auto max-w-3xl">
-        <a
-          href="#home"
-          className="text-xl text-primaryAccent flex flex-col items-center hover:text-primaryAccentLight transition-all duration-300">
-          <FaHome className="text-2xl mb-1" />
-          <span className="text-sm">Home</span>
-        </a>
-
-        <a
-          href="#explore"
-          className="text-xl text-primaryAccent flex flex-col items-center hover:text-primaryAccentLight transition-all duration-300">
-          <FaCompass className="text-2xl mb-1" />
-          <span className="text-sm">Explore</span>
-        </a>
-
-        <a
-          href="#activity"
-          className="text-xl text-primaryAccent flex flex-col items-center hover:text-primaryAccentLight transition-all duration-300">
-          <FaChartLine className="text-2xl mb-1" />
-          <span className="text-sm">Activity</span>
-        </a>
-
-        <a
-          href="#profile"
-          className="text-xl text-primaryAccent flex flex-col items-center hover:text-primaryAccentLight transition-all duration-300">
-          <FaUser className="text-2xl mb-1" />
-          <span className="text-sm">Profile</span>
-        </a>
+    <nav className="fixed inset-x-0 bottom-0 md:top-0 md:bottom-auto flex justify-center px-5 py-3 md:py-5 z-10	">
+      <div className="flex justify-between items-center w-full max-w-md bg-accent backdrop-blur-lg border border-glassBorder rounded-2xl px-4 py-3 md:py-4 md:px-6 shadow-lg">
+        {navItems.map((item, index) => (
+          <div
+            key={index}
+            className={`relative flex flex-col items-center justify-center px-6 md:px-7 ${
+              index < navItems.length - 1 ? "border-r-4 border-glassBorder" : ""
+            }`}>
+            <NavLink
+              to={item.href}
+              className="flex flex-col items-center text-white hover:scale-95 transition"
+              activeClassName="text-accent"
+              exact>
+              {item.icon}
+              <span className="hidden md:inline text-sm mt-1">
+                {item.label}
+              </span>
+            </NavLink>
+          </div>
+        ))}
       </div>
     </nav>
   );

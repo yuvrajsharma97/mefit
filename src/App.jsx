@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 const NotFound = lazy(() => import("./pages/error/errorpage"));
 const About = lazy(() => import("./pages/about/about"));
 const Home = lazy(() => import("./pages/home/home"));
+const Action = lazy(() => import("./pages/action/action"));
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/action" element={<Action />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

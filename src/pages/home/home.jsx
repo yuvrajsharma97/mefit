@@ -1,8 +1,5 @@
 import React from "react";
 import HeroImage from "../../assets/hero.jpg";
-import YogaImage from "../../assets/yoga.jpg";
-import WeightliftingImage from "../../assets/weightlifting.jpg";
-import RunningImage from "../../assets/running.jpg";
 import FeaturesSectionHomePage from "../../components/featuresectionhomepage";
 
 const Home = () => {
@@ -22,7 +19,7 @@ const Home = () => {
             goals with ease.
           </p>
           <a
-            href="#workoutTypes"
+            href="/action"
             className="bg-accent hover:bg-accentHover text-white py-4 px-8 rounded-full font-semibold transition-transform transform hover:scale-105 shadow-lg">
             Start Tracking Now
           </a>
@@ -41,7 +38,7 @@ const Home = () => {
             Explore Workout Categories
           </h2>
           <p className="text-accentText text-lg max-w-2xl mx-auto">
-            Whether it’s yoga, weightlifting, or running, find the perfect
+            Whether it&apos;s yoga, weightlifting, or running, find the perfect
             workout to match your needs.
           </p>
         </div>

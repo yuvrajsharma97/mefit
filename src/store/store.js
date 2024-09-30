@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import actionDisplayReducer from "../features/actionPage/actionDisplaySlice";
 
 const store = configureStore({
   reducer: {
-    // Add your reducers here
+    actionDisplay: actionDisplayReducer
   },
 });
 

@@ -6,6 +6,14 @@ const NotFound = lazy(() => import("./pages/error/errorpage"));
 const About = lazy(() => import("./pages/about/about"));
 const Home = lazy(() => import("./pages/home/home"));
 const Action = lazy(() => import("./pages/action/action"));
+const Yoga = lazy(() => import("./pages/action/yoga/yoga"));
+const Weighttraining = lazy(() =>
+  import("./pages/action/weighttraining/weighttraining")
+);
+const Bodyweighttraining = lazy(() =>
+  import("./pages/action/bodyweighttraining/bodyweighttraining")
+);
+const Running = lazy(() => import("./pages/action/running/running"));
 
 const App = () => {
   return (
@@ -15,6 +23,13 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/action" element={<Action />} />
+          <Route path="/action/yoga" element={<Yoga />} />
+          <Route path="/action/weighttraining" element={<Weighttraining />} />
+          <Route
+            path="/action/bodyweighttraining"
+            element={<Bodyweighttraining />}
+          />
+          <Route path="/action/running" element={<Running />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

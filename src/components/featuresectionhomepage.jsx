@@ -31,7 +31,7 @@ const FeaturesSectionHomePage = () => (
       <h2 className="text-4xl font-bold text-primary mb-6 tracking-wide">
         Your Fitness Journey Awaits
       </h2>
-      <p className="text-accentText text-lg max-w-3xl mx-auto">
+      <p className="text-primary text-lg max-w-3xl mx-auto">
         Customize workouts, track progress, and stay motivated with our
         feature-rich fitness app.
       </p>
@@ -50,7 +50,7 @@ const FeaturesSectionHomePage = () => (
           <h3 className="text-xl font-semibold text-primary mb-4">
             {feature.title}
           </h3>
-          <p className="text-accentText text-center">{feature.description}</p>
+          <p className="text-primary text-center">{feature.description}</p>
         </div>
       ))}
     </div>

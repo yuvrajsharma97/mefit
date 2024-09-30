@@ -5,27 +5,37 @@ import {
   RunningImage,
   BodyweightImage,
 } from "./assetsimport";
+import { useDispatch } from "react-redux";
+import { setActionDisplay } from "../features/actionPage/actionDisplaySlice";
+
 const Actionpageworkoutoptions = () => {
+
+  const dispatch = useDispatch();
+
   const workoutOptions = [
     {
       name: "Yoga",
       description: "Improve flexibility and relax.",
       image: YogaImage,
+      link: "yoga",
     },
     {
       name: "Weight Training",
       description: "Build strength and power.",
       image: WeightliftingImage,
+      link: "weighttraining",
     },
     {
       name: "Body Weight Training",
       description: "Train using your body weight.",
       image: BodyweightImage,
+      link: "bodyweighttraining",
     },
     {
       name: "Running",
       description: "Cardio and endurance workout.",
       image: RunningImage,
+      link: "running",
     },
     // {
     //   name: "Other",
@@ -33,6 +43,7 @@ const Actionpageworkoutoptions = () => {
     //   image: "https://source.unsplash.com/featured/?fitness",
     // },
   ];
+  
 
   return (
     <div className="min-h-screen bg-[#060A0D] flex flex-col items-center px-4 py-12">
@@ -44,7 +55,8 @@ const Actionpageworkoutoptions = () => {
       {/* Workout Options Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-6xl py-5 pb-[4rem]">
         {workoutOptions.map((workout, index) => (
-          <div
+          <button
+            onClick={() => dispatch(setActionDisplay(workout.link))}
             key={index}
             className="relative w-full h-64 sm:h-80 lg:h-96 rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105"
             style={{
@@ -60,7 +72,7 @@ const Actionpageworkoutoptions = () => {
                 {workout.description}
               </p>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

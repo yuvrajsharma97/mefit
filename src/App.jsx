@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Lazy load the components
 const NotFound = lazy(() => import("./pages/error/errorpage"));

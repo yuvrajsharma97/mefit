@@ -224,7 +224,7 @@ const Running = () => {
       </h1>
       {/* Sprinting */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Sprinting </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {sprinting.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
@@ -234,7 +234,7 @@ const Running = () => {
         {" "}
         Long Distance{" "}
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {longDistance.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
@@ -244,7 +244,7 @@ const Running = () => {
         {" "}
         Speed Work{" "}
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {speedWork.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
@@ -254,7 +254,7 @@ const Running = () => {
         {" "}
         Endurance Running{" "}
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {enduranceRunning.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
@@ -264,7 +264,7 @@ const Running = () => {
         {" "}
         Recovery Runs{" "}
       </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {recoveryRuns.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}

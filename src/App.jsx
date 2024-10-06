@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Myplan from "./pages/myplan/myplan";
 
 // Lazy load the components
 const NotFound = lazy(() => import("./pages/error/errorpage"));
@@ -30,6 +31,7 @@ const App = () => {
             element={<Bodyweighttraining />}
           />
           <Route path="/action/running" element={<Running />} />
+          <Route path="/myplan" element={<Myplan />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

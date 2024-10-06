@@ -10,7 +10,6 @@ export const actionDisplaySlice = createSlice({
     reducers: {
         setActionDisplay: (state, action) => {
             state.actionPageDisplays = action.payload;
-            console.log(state.actionPageDisplays);
         },
     },
 });

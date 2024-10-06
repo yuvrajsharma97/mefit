@@ -1,14 +1,14 @@
 import React from "react";
-import { FaHome, FaRunning, FaHandSpock, FaUser } from "react-icons/fa";
+import { GoHome, GoSearch, GoPerson, GoPencil } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setActionDisplay } from "../features/actionPage/actionDisplaySlice";
 
 const navItems = [
-  { href: "/", icon: <FaHome size={24} />, label: "Home" },
-  { href: "/action", icon: <FaRunning size={24} />, label: "Explore" },
-  { href: "/myplan", icon: <FaHandSpock size={24} />, label: "MyPlan" },
-  { href: "/profile", icon: <FaUser size={24} />, label: "Profile" },
+  { href: "/", icon: <GoHome size={24} />, label: "Home" },
+  { href: "/action", icon: <GoSearch size={24} />, label: "Explore" },
+  { href: "/myplan", icon: <GoPencil  size={24} />, label: "MyPlan" },
+  { href: "/profile", icon: <GoPerson  size={24} />, label: "Profile" },
 ];
 
 const Navbar = () => {

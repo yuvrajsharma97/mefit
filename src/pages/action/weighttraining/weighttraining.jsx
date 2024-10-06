@@ -341,49 +341,49 @@ const Weighttraining = () => {
       </h1>
       {/* Shoulders */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Shoulders </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {shoulders.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Chest */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Chest </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {chest.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Back */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Back </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {back.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Biceps */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Biceps </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {biceps.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Triceps */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Triceps </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {triceps.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Legs */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Legs </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {legs.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}
       </div>
       {/* Core */}
       <h3 className="text-2xl bold underline my-12 text-accent"> Core </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+      <div className="flex flex-row flex-wrap justify-center w-full max-w-7xl">
         {core.map((pose, index) => (
           <PoseCard key={index} pose={pose} />
         ))}

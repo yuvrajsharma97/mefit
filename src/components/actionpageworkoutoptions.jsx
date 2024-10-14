@@ -16,25 +16,29 @@ const Actionpageworkoutoptions = () => {
     {
       name: "Yoga",
       description: "Improve flexibility and relax.",
-      image: YogaImage,
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/yoga.jpg?alt=media&token=6aa75617-259f-4644-8a8b-5432273772a6",
       link: "yoga",
     },
     {
       name: "Weight Training",
       description: "Build strength and power.",
-      image: WeightliftingImage,
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/weightlifting.jpg?alt=media&token=e887d36b-b730-4c39-87da-f7771e08a78b",
       link: "weighttraining",
     },
     {
       name: "Body Weight Training",
       description: "Train using your body weight.",
-      image: BodyweightImage,
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/bodyweight.jpg?alt=media&token=f56af675-9ce8-4e92-b7ac-5314aa42f083",
       link: "bodyweighttraining",
     },
     {
       name: "Running",
       description: "Cardio and endurance workout.",
-      image: RunningImage,
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/running.jpg?alt=media&token=29d31ded-a026-4ea7-aaec-6bad1504cae7",
       link: "running",
     },
     // {

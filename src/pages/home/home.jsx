@@ -1,5 +1,4 @@
 import React from "react";
-import HeroImage from "../../assets/hero.jpg";
 import FeaturesSectionHomePage from "../../components/featuresectionhomepage";
 
 const Home = () => {
@@ -8,7 +7,9 @@ const Home = () => {
       {/* Hero Section */}
       <section
         className="relative h-screen flex items-center justify-center bg-cover bg-center text-center"
-        style={{ backgroundImage: `url(${HeroImage})` }}>
+        style={{
+          backgroundImage: `url(https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/hero.jpg?alt=media&token=ae47b8d4-9227-427d-aac6-01cbb2cf5289)`,
+        }}>
         <div className="absolute inset-0 bg-bgDarkest opacity-70"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-6">
           <h1 className="text-6xl font-extrabold text-white mb-8 leading-tight tracking-tight">

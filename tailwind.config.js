@@ -23,6 +23,9 @@ export default {
         "custom-radial":
           "radial-gradient(circle, rgba(1,64,109,0.65) 0%, rgba(255,122,15,0.65) 100%)",
       },
+      boxShadow: {
+        "boxShadow": "1px 0px 10px #018D96",
+      },
     },
   },
   plugins: [require("daisyui")],

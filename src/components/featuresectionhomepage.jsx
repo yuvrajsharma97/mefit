@@ -1,27 +1,30 @@
 import React from "react";
-import { YogaImage, WeightliftingImage, RunningImage } from "./assetsimport";
+
 
 const features = [
   {
     title: "Personalized Workouts",
     description:
       "Tailor your workout plans to fit your personal fitness goals.",
-    image: YogaImage,
-    alt: "Yoga",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/yoga.jpg?alt=media&token=6aa75617-259f-4644-8a8b-5432273772a6",
+    alt: "Personalized Workouts",
   },
   {
     title: "Progress Tracking",
     description:
       "Get detailed insights and track your progress for every workout session.",
-    image: WeightliftingImage,
-    alt: "Weightlifting",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/weightlifting.jpg?alt=media&token=e887d36b-b730-4c39-87da-f7771e08a78b",
+    alt: "Progress Tracking",
   },
   {
     title: "Motivation Boost",
     description:
       "Celebrate milestones and stay motivated with our engaging features.",
-    image: RunningImage,
-    alt: "Running",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/mefit-5d6c1.appspot.com/o/running.jpg?alt=media&token=29d31ded-a026-4ea7-aaec-6bad1504cae7",
+    alt: "Motivation Boost",
   },
 ];
 

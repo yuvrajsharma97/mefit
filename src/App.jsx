@@ -15,6 +15,7 @@ const Bodyweighttraining = lazy(() =>
   import("./pages/action/bodyweighttraining/bodyweighttraining")
 );
 const Running = lazy(() => import("./pages/action/running/running"));
+const Profile = lazy(() => import("./pages/profile/profilepage"));
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           />
           <Route path="/action/running" element={<Running />} />
           <Route path="/myplan" element={<Myplan />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

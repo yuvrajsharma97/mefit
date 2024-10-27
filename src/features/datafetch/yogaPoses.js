@@ -10,17 +10,13 @@ export const fetchYogaPoses = createAsyncThunk(
     if (yogaPoses.length > 0) {
       return yogaPoses;
     }
-
-    console.log("asd", yogaPoses);
     
 
-    const querySnapshot = await getDocs(collection(db, "yogaPoses"));
+    const querySnapshot = await getDocs(collection( db ,"yogaPoses"));
     const fetchedYogaPoses = querySnapshot.docs.map((doc) => ({  
       id: doc.id,
       ...doc.data(),
     }));
-
-    console.log(fetchedYogaPoses);
     return fetchedYogaPoses;
   }
 );

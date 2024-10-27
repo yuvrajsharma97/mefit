@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { MdClose, MdAdd, MdRemove } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { addPlan } from "../features/myPlan/myPlanPageSlice";
+import AuthModal from "./authmodal";
+
 
 const PoseCard = ({ pose, poseId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sets, setSets] = useState(1);
+  const [authModalOpen, setAuthModalOpen] = useState(false); // Manage auth modal visibility
 
   // Function to open modal
   const openModal = () => setIsModalOpen(true);
@@ -18,6 +21,21 @@ const PoseCard = ({ pose, poseId }) => {
   const decrementSets = () => setSets(sets > 1 ? sets - 1 : 1);
 
   const dispatch = useDispatch();
+
+  const handleAddButton = () => {
+    dispatch(
+      addPlan({
+        poseId,
+        poseTitle: pose.name,
+        poseShortDescription: pose.short_description,
+        image: pose.image,
+        instruction: pose.instruction,
+        noOfSets: sets,
+      })
+    );
+    setAuthModalOpen(true); // Open the auth modal
+    closeModal(); // Close the pose modal
+  };
 
   return (
     <div className="flex flex-row flex wrap">
@@ -42,7 +60,6 @@ const PoseCard = ({ pose, poseId }) => {
         {/* Content: Workout Name and Info */}
         <div className="p-3">
           <h3 className="text-white font-semibold">{pose.name}</h3>
-          {/* <p className="text-accentText text-sm">{pose.short_description}</p> */}
         </div>
       </div>
 
@@ -85,29 +102,17 @@ const PoseCard = ({ pose, poseId }) => {
                   <button
                     className="btn btn-primary btn-sm bg-primary border-0 hover:bg-accent text-white"
                     onClick={decrementSets}>
-                    <MdRemove size={24} /> {/* Minus icon */}
+                    <MdRemove size={24} />
                   </button>
                   <span className="text-lg">{sets} Sets</span>
                   <button
                     className="btn btn-primary btn-sm bg-primary border-0 hover:bg-accent text-white"
                     onClick={incrementSets}>
-                    <MdAdd size={24} /> {/* Plus icon */}
+                    <MdAdd size={24} />
                   </button>
                 </div>
                 <button
-                  onClick={() => {
-                    dispatch(
-                      addPlan({
-                        poseId,
-                        poseTitle: pose.name,
-                        poseShortDescription: pose.short_description,
-                        image: pose.image,
-                        instruction: pose.instruction,
-                        noOfSets: sets,
-                      })
-                    );
-                    closeModal();
-                  }}
+                  onClick={handleAddButton}
                   className="btn btn-primary btn-sm bg-primary border-0 w-2/6 hover:bg-accent text-white">
                   Add
                 </button>
@@ -116,6 +121,12 @@ const PoseCard = ({ pose, poseId }) => {
           </div>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </div>
   );
 };

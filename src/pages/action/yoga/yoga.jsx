@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchYogaPoses } from "../../../features/datafetch/yogaPoses";
 import PoseCard from "../../../components/posecard";
+import Loader from "../../../components/loader";
 
 const Yoga = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,11 @@ const Yoga = () => {
   }, [dispatch, yogaPoses.length]);
 
   if (loading) {
-    return <p>Loading...</p>; 
+    return (
+      <div className="min-h-screen bg-bgDarkest text-white flex flex-col items-center px-4 py-12 md:py-[8rem]">
+        <Loader />
+      </div> 
+    ); 
   }
 
   if (error) {

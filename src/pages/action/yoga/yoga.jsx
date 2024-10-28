@@ -7,10 +7,6 @@ import Loader from "../../../components/loader";
 const Yoga = () => {
   const dispatch = useDispatch();
   const { yogaPoses, loading, error } = useSelector((state) => state.yoga);
-
-  console.log(yogaPoses); 
-  
-
   useEffect(() => {
     // Dispatch fetchYogaPoses if the yoga poses are not already fetched
     if (yogaPoses.length === 0) {
@@ -22,8 +18,8 @@ const Yoga = () => {
     return (
       <div className="min-h-screen bg-bgDarkest text-white flex flex-col items-center px-4 py-12 md:py-[8rem]">
         <Loader />
-      </div> 
-    ); 
+      </div>
+    );
   }
 
   if (error) {

@@ -1,15 +1,87 @@
 import React, { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, googleProvider } from "../firebaseConfig";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+
+const db = getFirestore();
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [loginState, setLoginState] = useState(true);
 
   useEffect(() => {
     Aos.init();
-  }, [loginState]);
+  }, []);
 
-  if (!isOpen) return null; // Render nothing if the modal is not open
+  const handleFormChange = (mode) => {
+    setLoginState(mode === "login");
+  };
+
+  const signUp = async (name, email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      // Save additional data (Name) to Firestore
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        name: name,
+        email: email,
+      });
+
+      await sendEmailVerification(userCredential.user);
+      console.log("Verification email sent.");
+    } catch (error) {
+      console.error("Error signing up:", error.message);
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Optionally, save user info to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        name: user.displayName,
+        email: user.email,
+      });
+
+      console.log("User signed up with Google:", user);
+    } catch (error) {
+      console.error("Error with Google signup:", error.message);
+    }
+  };
+
+  const handleSignUp = async (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const confirmPassword = event.target.confirmPassword.value;
+
+    if (password.length < 6 || confirmPassword.length < 6) {
+      console.error("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      console.error("Passwords do not match.");
+      return;
+    }
+
+    await signUp(name, email, password);
+    onClose();
+  };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -22,13 +94,13 @@ const AuthModal = ({ isOpen, onClose }) => {
               ✕
             </button>
           </form>
+
           {loginState ? (
-            <div className="p-8" data-aos="fade-left">
+            // Login Form
+            <div key="login" className="p-8" data-aos="fade-left">
               <h3 className="font-bold text-lg">Login</h3>
               <p className="py-4">Please enter your login details.</p>
-
               <form className="space-y-4">
-                {/* Username/Email Input */}
                 <div className="form-control">
                   <label
                     htmlFor="email"
@@ -43,8 +115,6 @@ const AuthModal = ({ isOpen, onClose }) => {
                     required
                   />
                 </div>
-
-                {/* Password Input */}
                 <div className="form-control">
                   <label
                     htmlFor="password"
@@ -59,8 +129,6 @@ const AuthModal = ({ isOpen, onClose }) => {
                     required
                   />
                 </div>
-
-                {/* Remember Me & Forgot Password */}
                 <div className="flex justify-between items-center">
                   <label className="flex items-center space-x-2 text-accent">
                     <input type="checkbox" className="checkbox checkbox-sm" />
@@ -70,51 +138,46 @@ const AuthModal = ({ isOpen, onClose }) => {
                     Forgot Password?
                   </a>
                 </div>
-
-                {/* Submit Button */}
                 <div className="form-control">
                   <button className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white">
                     Login
                   </button>
                 </div>
               </form>
-              {/* Sign Up Prompt */}
               <div className="text-center mt-4">
                 <p className="text-accentText">
                   Don't have an account?{" "}
-                  <a
-                    onClick={() => {
-                      setLoginState(false);
-                    }}
+                  <button
+                    onClick={() => handleFormChange("signup")}
                     className="text-accent hover:underline">
                     Sign up
-                  </a>
+                  </button>
                 </p>
               </div>
             </div>
           ) : (
-            <div className="p-8" data-aos="fade-right">
+            // Sign-Up Form
+            <div key="signup" className="p-8" data-aos="fade-right">
               <h3 className="font-bold text-lg">Sign Up</h3>
-              <p className="py-4">Please enter your sign-up details.</p>
-
-              <form className="space-y-4">
-                {/* Username Input */}
+              <p className="py-4">
+                Please enter your sign-up details or sign up with Google.
+              </p>
+              <form className="space-y-4" onSubmit={handleSignUp}>
                 <div className="form-control">
                   <label
-                    htmlFor="username"
+                    htmlFor="name"
                     className="label text-sm font-semibold text-accentText">
-                    Username
+                    Name
                   </label>
                   <input
-                    id="username"
+                    id="name"
                     type="text"
+                    name="name"
                     className="input input-bordered w-full bg-white text-gray-900 focus:outline-none"
-                    placeholder="Enter your username"
+                    placeholder="Enter your name"
                     required
                   />
                 </div>
-
-                {/* Email Input */}
                 <div className="form-control">
                   <label
                     htmlFor="email"
@@ -124,13 +187,12 @@ const AuthModal = ({ isOpen, onClose }) => {
                   <input
                     id="email"
                     type="email"
+                    name="email"
                     className="input input-bordered w-full bg-white text-gray-900 focus:outline-none"
                     placeholder="Enter your email"
                     required
                   />
                 </div>
-
-                {/* Password Input */}
                 <div className="form-control">
                   <label
                     htmlFor="password"
@@ -140,13 +202,12 @@ const AuthModal = ({ isOpen, onClose }) => {
                   <input
                     id="password"
                     type="password"
+                    name="password"
                     className="input input-bordered w-full bg-white text-gray-900 focus:outline-none"
                     placeholder="Enter your password"
                     required
                   />
                 </div>
-
-                {/* Confirm Password Input */}
                 <div className="form-control">
                   <label
                     htmlFor="confirm-password"
@@ -156,31 +217,35 @@ const AuthModal = ({ isOpen, onClose }) => {
                   <input
                     id="confirm-password"
                     type="password"
+                    name="confirmPassword"
                     className="input input-bordered w-full bg-white text-gray-900 focus:outline-none"
                     placeholder="Confirm your password"
                     required
                   />
                 </div>
-
-                {/* Submit Button */}
                 <div className="form-control">
-                  <button className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white">
-                    Sign Up
-                  </button>
+                  <input
+                    type="submit"
+                    className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white"
+                    value="Sign Up"
+                  />
                 </div>
               </form>
-
-              {/* Login Prompt */}
+              <div className="form-control mt-4">
+                <button
+                  onClick={handleGoogleSignUp}
+                  className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white">
+                  Sign Up with Google
+                </button>
+              </div>
               <div className="text-center mt-4">
                 <p className="text-accentText">
                   Already have an account?{" "}
-                  <a
-                    onClick={() => {
-                      setLoginState(true);
-                    }}
+                  <button
+                    onClick={() => handleFormChange("login")}
                     className="text-accent hover:underline">
                     Login
-                  </a>
+                  </button>
                 </p>
               </div>
             </div>

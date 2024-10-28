@@ -2,16 +2,16 @@
 import React from "react";
 import { db } from "../firebaseConfig"; // Firestore instance
 import { collection, doc, setDoc } from "firebase/firestore"; // Firestore methods
-import Bodyweightexcersices from "./bodyweightjson"; // Import JSON data
+import Runningexcercise from "../json/runningjson"; // Import JSON data
 
 const CreateCollection = () => {
   const createCollection = async () => {
     try {
       // Set up a single collection reference
-      const collectionRef = collection(db, "bodyweightexercises");
+      const collectionRef = collection(db, "runningexcercises");
 
       // Loop over each object in the imported JSON array to add as a document
-      for (const docData of Bodyweightexcersices) {
+      for (const docData of Runningexcercise) {
         const newDocRef = doc(collectionRef); // Generate a unique ID for each document
 
         // Add the document to Firestore with the specified fields, including collection

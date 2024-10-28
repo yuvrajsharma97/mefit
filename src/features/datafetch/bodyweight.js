@@ -13,13 +13,11 @@ export const fetchBodyweightExercises = createAsyncThunk(
 
     // Fetch data from the 'bodyweightexercises' collection
     const querySnapshot = await getDocs(collection(db, "bodyweightexercises"));
-    // const fetchedBodyweightExercises = querySnapshot.docs.map((doc) => ({
-    //   id: doc.id,
-    //   ...doc.data(),
-    // }));
-
-    console.log(querySnapshot);
-    return querySnapshot;
+    const fetchedBodyweightExercises = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return fetchedBodyweightExercises;
   }
 );
 

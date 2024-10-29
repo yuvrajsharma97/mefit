@@ -5,14 +5,17 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithPopup,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebaseConfig";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { useAuth } from "../context/authContext"; // Importing AuthContext
 
 const db = getFirestore();
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [loginState, setLoginState] = useState(true);
+  const { setIsUserLoggedIn } = useAuth();
 
   useEffect(() => {
     Aos.init();
@@ -37,6 +40,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       });
 
       await sendEmailVerification(userCredential.user);
+      setIsUserLoggedIn(userCredential.user); // Update context with new user
       console.log("Verification email sent.");
     } catch (error) {
       console.error("Error signing up:", error.message);
@@ -54,7 +58,9 @@ const AuthModal = ({ isOpen, onClose }) => {
         email: user.email,
       });
 
+      setIsUserLoggedIn(user); // Update context with new user
       console.log("User signed up with Google:", user);
+      onClose();
     } catch (error) {
       console.error("Error with Google signup:", error.message);
     }
@@ -81,6 +87,25 @@ const AuthModal = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setIsUserLoggedIn(userCredential.user); // Update context with logged-in user
+      console.log("User logged in:", userCredential.user);
+      onClose();
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -100,7 +125,7 @@ const AuthModal = ({ isOpen, onClose }) => {
             <div key="login" className="p-8" data-aos="fade-left">
               <h3 className="font-bold text-lg">Login</h3>
               <p className="py-4">Please enter your login details.</p>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleLogin}>
                 <div className="form-control">
                   <label
                     htmlFor="email"
@@ -139,7 +164,9 @@ const AuthModal = ({ isOpen, onClose }) => {
                   </a>
                 </div>
                 <div className="form-control">
-                  <button className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white">
+                  <button
+                    type="submit"
+                    className="btn border-accent hover:bg-accent w-1/2 rounded-full mx-auto text-white">
                     Login
                   </button>
                 </div>

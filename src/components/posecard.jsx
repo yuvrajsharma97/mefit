@@ -23,10 +23,9 @@ const PoseCard = ({ pose, poseId }) => {
     if (!isUserLoggedIn) {
       setAuthModalOpen(true); // Open the auth modal if the user is not logged in
     } else {
-      alert("User is logged in!"); // Alert user if logged in
       dispatch(
         addPlan({
-          poseId,
+          poseId: pose.id,
           poseTitle: pose.name,
           poseShortDescription: pose.short_description,
           image: pose.image,

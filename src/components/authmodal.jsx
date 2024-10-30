@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebaseConfig";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
-import { useAuth } from "../context/authContext"; // Importing AuthContext
+import { useAuth } from "../context/authContext";
 
 const db = getFirestore();
 
@@ -40,7 +40,11 @@ const AuthModal = ({ isOpen, onClose }) => {
       });
 
       await sendEmailVerification(userCredential.user);
-      setIsUserLoggedIn(userCredential.user); // Update context with new user
+      setIsUserLoggedIn(userCredential.user);
+      console.log("User signed up:", userCredential.user);
+      if(userCredential.user) {
+        localStorage.setItem("userIsLoggedIn", "true");
+      }
       console.log("Verification email sent.");
     } catch (error) {
       console.error("Error signing up:", error.message);
@@ -58,7 +62,11 @@ const AuthModal = ({ isOpen, onClose }) => {
         email: user.email,
       });
 
-      setIsUserLoggedIn(user); // Update context with new user
+      setIsUserLoggedIn(user); 
+      console.log("User signed up:", user);
+      if (user) {
+        localStorage.setItem("userIsLoggedIn", "true");
+      }
       console.log("User signed up with Google:", user);
       onClose();
     } catch (error) {
@@ -100,6 +108,9 @@ const AuthModal = ({ isOpen, onClose }) => {
       );
       setIsUserLoggedIn(userCredential.user); // Update context with logged-in user
       console.log("User logged in:", userCredential.user);
+      if (userCredential.user) {
+        localStorage.setItem("userIsLoggedIn", "true");
+      }
       onClose();
     } catch (error) {
       console.error("Error logging in:", error.message);

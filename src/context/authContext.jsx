@@ -8,6 +8,12 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("userIsLoggedIn")) {
+      setIsUserLoggedIn(true);
+    }
+  }, []);
+
   const value = {
     isUserLoggedIn,
     setIsUserLoggedIn,

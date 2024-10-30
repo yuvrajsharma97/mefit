@@ -32,11 +32,11 @@ const myPlanPageSlice = createSlice({
     },
     removePlan: (state, action) => {
       const { poseId } = action.payload;
-      state.myPlan = state.myPlan.filter((plan) => plan.poseId !== poseId); // Mutate myPlan, don't return new array
+      state.myPlan = state.myPlan.filter((plan) => plan.poseId !== poseId); 
     },
     editPlan: (state, action) => {
       const { poseId, noOfSets } = action.payload;
-      const existingPlan = state.myPlan.find((plan) => plan.poseId === poseId); // Access myPlan array
+      const existingPlan = state.myPlan.find((plan) => plan.poseId === poseId); 
       if (existingPlan) {
         existingPlan.noOfSets = noOfSets;
       }

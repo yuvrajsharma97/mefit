@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MdClose, MdAdd, MdRemove } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { addPlan } from "../features/myPlan/myPlanPageSlice";
+import { addPlanToFirestore } from "../features/myPlan/myPlanPageSlice";
 import AuthModal from "./authmodal";
 import { useAuth } from "../context/authContext"; // Import the auth context
 
@@ -9,7 +9,7 @@ const PoseCard = ({ pose, poseId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sets, setSets] = useState(1);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const { isUserLoggedIn } = useAuth(); // Access auth state from context
+  const { isUserLoggedIn, user } = useAuth(); // Access user details from context
 
   const dispatch = useDispatch();
 
@@ -22,15 +22,18 @@ const PoseCard = ({ pose, poseId }) => {
   const handleAddButton = () => {
     if (!isUserLoggedIn) {
       setAuthModalOpen(true); // Open the auth modal if the user is not logged in
-    } else {
+    } else if (user) {
       dispatch(
-        addPlan({
-          poseId: pose.id,
-          poseTitle: pose.name,
-          poseShortDescription: pose.short_description,
-          image: pose.image,
-          instruction: pose.instruction,
-          noOfSets: sets,
+        addPlanToFirestore({
+          userId: user.uid, // Pass userId from the auth context
+          plan: {
+            poseId: pose.id,
+            poseTitle: pose.name,
+            poseShortDescription: pose.short_description,
+            image: pose.image,
+            instruction: pose.instruction,
+            noOfSets: sets,
+          },
         })
       );
       closeModal();

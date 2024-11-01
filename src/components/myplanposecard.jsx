@@ -1,8 +1,6 @@
 import React from "react";
 
 const MyPlanPoseCard = ({ pose }) => {
-
-    
   
   return (
     <div className="relative w-80 p-4 bg-bgDarker rounded-lg shadow-lg overflow-hidden">
@@ -12,9 +10,9 @@ const MyPlanPoseCard = ({ pose }) => {
         style={{
           backgroundImage: `url(${pose.image})`,
         }}>
-        <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center gap-2 rounded-lg">
+        {/* <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center gap-2 rounded-lg">
           <span className="text-white font-semibold">View Pose</span>
-        </div>
+        </div> */}
       </div>
 
       {/* Pose Title and Description */}
@@ -26,7 +24,9 @@ const MyPlanPoseCard = ({ pose }) => {
       </p>
 
       {/* Instruction */}
-      <p className="text-sm text-accentText mb-4">{pose.instruction}</p>
+      {/* <p className="text-sm text-accentText mb-4 truncate ">
+        {pose.instruction}
+      </p> */}
 
       {/* Sets and Footer */}
       <div className="flex justify-between items-center text-accent">

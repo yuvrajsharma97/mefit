@@ -43,7 +43,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       setIsUserLoggedIn(userCredential.user);
       console.log("User signed up:", userCredential.user);
       if(userCredential.user) {
-        localStorage.setItem("userIsLoggedIn", "true");
+        localStorage.setItem("userIsLoggedIn", userCredential.user);
       }
       console.log("Verification email sent.");
     } catch (error) {
@@ -65,7 +65,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       setIsUserLoggedIn(user); 
       console.log("User signed up:", user);
       if (user) {
-        localStorage.setItem("userIsLoggedIn", "true");
+        localStorage.setItem("userIsLoggedIn", user);
       }
       console.log("User signed up with Google:", user);
       onClose();
@@ -109,7 +109,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       setIsUserLoggedIn(userCredential.user); // Update context with logged-in user
       console.log("User logged in:", userCredential.user);
       if (userCredential.user) {
-        localStorage.setItem("userIsLoggedIn", "true");
+        localStorage.setItem("userIsLoggedIn", userCredential.user);
       }
       onClose();
     } catch (error) {

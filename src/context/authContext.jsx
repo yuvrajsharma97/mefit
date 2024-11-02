@@ -11,6 +11,8 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (localStorage.getItem("userIsLoggedIn")) {
       setIsUserLoggedIn(true);
+    }else{
+      setIsUserLoggedIn(false);
     }
   }, []);
 

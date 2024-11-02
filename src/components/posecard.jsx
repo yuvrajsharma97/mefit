@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdClose, MdAdd, MdRemove } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { addPlanToFirestore } from "../features/myPlan/myPlanPageSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAndCreateCollection } from "../features/myPlan/myCuratedPlanSlice"; // Import the action
 import AuthModal from "./authmodal";
 import { useAuth } from "../context/authContext"; // Import the auth context
 
@@ -12,6 +12,9 @@ const PoseCard = ({ pose, poseId }) => {
   const { isUserLoggedIn, user } = useAuth(); // Access user details from context
 
   const dispatch = useDispatch();
+  const { status, created, error } = useSelector(
+    (state) => state.myCuratedPlan
+  );
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -22,23 +25,42 @@ const PoseCard = ({ pose, poseId }) => {
   const handleAddButton = () => {
     if (!isUserLoggedIn) {
       setAuthModalOpen(true); // Open the auth modal if the user is not logged in
-    } else if (user) {
+      console.log("User not logged in");
+    } else {
+      console.log("User logged in");
+
+      const newPlan = {
+        collection: "myCuratedPlan",
+        id: pose.id,
+        noOfSets: sets,
+        image: pose.image,
+        instruction: pose.instruction,
+        name: pose.name,
+        short_description: pose.short_description,
+      };
+
       dispatch(
-        addPlanToFirestore({
-          userId: user.uid, // Pass userId from the auth context
-          plan: {
-            poseId: pose.id,
-            poseTitle: pose.name,
-            poseShortDescription: pose.short_description,
-            image: pose.image,
-            instruction: pose.instruction,
-            noOfSets: sets,
-          },
+        checkAndCreateCollection({
+          userId: isUserLoggedIn.uid,
+          newPlan,
         })
       );
+
       closeModal();
     }
   };
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      console.log(
+        created
+          ? "Collection created and plan added"
+          : "Plan added to existing collection"
+      );
+    } else if (status === "failed") {
+      console.error("Error:", error);
+    }
+  }, [status, created, error]);
 
   return (
     <div className="flex flex-row flex-wrap">

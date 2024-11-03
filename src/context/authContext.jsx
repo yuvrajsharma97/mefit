@@ -9,9 +9,10 @@ const AuthProvider = ({ children }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("userIsLoggedIn")) {
+    const user = localStorage.getItem("userIsLoggedIn");
+    if (user.uid) {
       setIsUserLoggedIn(true);
-    }else{
+    } else {
       setIsUserLoggedIn(false);
     }
   }, []);

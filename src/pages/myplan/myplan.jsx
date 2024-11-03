@@ -1,39 +1,43 @@
-// MyPlan.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "../../components/navbar";
+import { fetchMyCuratedPlan } from "../../features/datafetch/myplan";
 import MyPlanPoseCard from "../../components/myplanposecard";
+import { useAuth } from "../../context/authContext";
 
 
-const MyPlan = () => {
- 
+const MyCuratedPlanList = ({ userId }) => {
+  const dispatch = useDispatch();
+  const { plans, loading, error } = useSelector(
+    (state) => state.myCuratedPlanfetch
+  );
 
-  // Ensure user-specific collection exists when component mounts
+  const { isUserLoggedIn } = useAuth();
+  console.log(isUserLoggedIn);
   useEffect(() => {
-    if (user) {
-      dispatch(createUserPlanCollection(user.uid));
+    if (isUserLoggedIn.uid) {
+      dispatch(fetchMyCuratedPlan(userId));
     }
-  }, [user, dispatch]);
+  }, [dispatch, userId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (plans.length === 0) {
+    return <p>No plans found.</p>;
+  }
 
   return (
-    <React.Fragment>
-      <Navbar />
-      {/* <div className="bg-bgDarkest min-h-screen md:py-[8rem]">
-        <h1 className="text-3xl font-bold text-accent text-center py-[4rem]">
-          Your Curated Plan
-        </h1>
-        {loadingStatus === "loading" ? (
-          <p className="text-center text-accent">Loading...</p>
-        ) : (
-          <div className="flex flex-wrap gap-6 md:px-6 justify-around text-accentText">
-            {.map((pose, index) => (
-              <MyPlanPoseCard key={index} pose={pose} userId={user.uid} />
-            ))}
-          </div>
-        )}
-      </div> */}
-    </React.Fragment>
+    <div className="flex flex-wrap gap-4">
+      {plans.map((pose) => (
+        <MyPlanPoseCard key={pose.id} pose={pose} />
+      ))}
+    </div>
   );
 };
 
-export default MyPlan;
+export default MyCuratedPlanList;

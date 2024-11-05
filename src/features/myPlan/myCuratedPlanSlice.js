@@ -16,10 +16,6 @@ export const checkAndCreateCollection = createAsyncThunk(
     try {
       // Check if the collection exists
       const docSnap = await getDoc(docRef);
-
-      console.log("reached here");
-      
-
       const newDocument = {
         collection: newPlan.collection,
         id: newPlan.id,
@@ -30,17 +26,33 @@ export const checkAndCreateCollection = createAsyncThunk(
         short_description: newPlan.short_description,
       };
 
-
       if (!docSnap.exists()) {
         // Create the collection with the initial document
         await setDoc(docRef, { plans: [newDocument] });
         return { created: true, newDocument };
       } else {
-        // Add the new document to the existing collection
+        // Get the current plans from the document
         const currentPlans = docSnap.data().plans || [];
-        await updateDoc(docRef, {
-          plans: [...currentPlans, newDocument],
-        });
+
+        // Check if the plan with the same id already exists
+        const existingPlanIndex = currentPlans.findIndex(
+          (plan) => plan.id === newPlan.id
+        );
+
+        if (existingPlanIndex !== -1) {
+          // Update the existing plan with new data
+          currentPlans[existingPlanIndex] = newDocument;
+          console.log("Plan updated");
+          
+        } else {
+          // Add the new plan to the collection
+          currentPlans.push(newDocument);
+          console.log("Plan added");
+       
+        }
+
+        // Update the document with the modified plans array
+        await updateDoc(docRef, { plans: currentPlans });
         return { created: false, newDocument };
       }
     } catch (error) {

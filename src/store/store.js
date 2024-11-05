@@ -5,7 +5,7 @@ import yogafetchSlice from "../features/datafetch/yogaPoses";
 import bodyweightExercisesSlice from "../features/datafetch/bodyweight";
 import weightTrainingExercisesSlice from "../features/datafetch/weighttrainning";
 import runningExercisesSlice from "../features/datafetch/running";
-import myCuratedPlanFetchSlice from "../features/datafetch/myplan";
+import myCuratedPlanFetchSlice from "../features/datafetch/myplandata";
 
 const store = configureStore({
   reducer: {

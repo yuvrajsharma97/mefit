@@ -58,7 +58,7 @@ const PoseCard = ({ pose, poseId }) => {
           : "Plan added to existing collection"
       );
     } else if (status === "failed") {
-      console.error("Error:", error);
+      console.error("Error:", "Failed to add plan to collection", status);
     }
   }, [status, created, error]);
 

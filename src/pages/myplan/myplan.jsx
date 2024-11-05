@@ -1,23 +1,25 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyCuratedPlan } from "../../features/datafetch/myplan";
+import { fetchMyCuratedPlan } from "../../features/datafetch/myplandata";
 import MyPlanPoseCard from "../../components/myplanposecard";
 import { useAuth } from "../../context/authContext";
 
-
-const MyCuratedPlanList = ({ userId }) => {
+const MyCuratedPlanList = () => {
   const dispatch = useDispatch();
   const { plans, loading, error } = useSelector(
     (state) => state.myCuratedPlanfetch
   );
 
-  const { isUserLoggedIn } = useAuth();
-  console.log(isUserLoggedIn);
+  // Ensure plans is an array, if not, return an empty array
+  const myplanPoses = Array.isArray(plans) ? plans : [];
+
+  const { user } = useAuth();
+
   useEffect(() => {
-    if (isUserLoggedIn.uid) {
-      dispatch(fetchMyCuratedPlan(userId));
+    if (user) {
+      dispatch(fetchMyCuratedPlan(user.uid)); // Fetch data when user is available
     }
-  }, [dispatch, userId]);
+  }, [user]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -27,13 +29,13 @@ const MyCuratedPlanList = ({ userId }) => {
     return <p>Error: {error}</p>;
   }
 
-  if (plans.length === 0) {
+  if (myplanPoses.length === 0) {
     return <p>No plans found.</p>;
   }
 
   return (
     <div className="flex flex-wrap gap-4">
-      {plans.map((pose) => (
+      {myplanPoses.map((pose) => (
         <MyPlanPoseCard key={pose.id} pose={pose} />
       ))}
     </div>

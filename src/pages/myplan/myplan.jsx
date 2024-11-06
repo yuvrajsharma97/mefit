@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyCuratedPlan } from "../../features/datafetch/myplandata";
 import MyPlanPoseCard from "../../components/myplanposecard";
 import { useAuth } from "../../context/authContext";
+import Loader from "../../components/loader";
 
 const MyCuratedPlanList = () => {
   const dispatch = useDispatch();
@@ -10,9 +11,8 @@ const MyCuratedPlanList = () => {
     (state) => state.myCuratedPlanfetch
   );
 
-  // Ensure plans is an array, if not, return an empty array
-  const myplanPoses = Array.isArray(plans) ? plans : [];
-
+  const [componentLoading, setComponentLoading] = useState(true);
+  const myPlanPoses = plans.plans
   const { user } = useAuth();
 
   useEffect(() => {
@@ -20,6 +20,12 @@ const MyCuratedPlanList = () => {
       dispatch(fetchMyCuratedPlan(user.uid)); // Fetch data when user is available
     }
   }, [user]);
+  
+  useEffect(() => {
+     setTimeout(() => {
+      setComponentLoading(false);
+    }, 1000);}, [plans]);
+  
 
   if (loading) {
     return <p>Loading...</p>;
@@ -29,16 +35,24 @@ const MyCuratedPlanList = () => {
     return <p>Error: {error}</p>;
   }
 
-  if (myplanPoses.length === 0) {
+  if (myPlanPoses.length === 0) {
     return <p>No plans found.</p>;
   }
 
+  console.log("Plans:", myPlanPoses);
+  
   return (
-    <div className="flex flex-wrap gap-4">
-      {myplanPoses.map((pose) => (
-        <MyPlanPoseCard key={pose.id} pose={pose} />
-      ))}
-    </div>
+    <React.Fragment>
+      {componentLoading ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-wrap gap-4">
+          {myPlanPoses.map((pose) => (
+            <MyPlanPoseCard key={pose.id} pose={pose} />
+          ))}
+        </div>
+      )}
+    </React.Fragment>
   );
 };
 

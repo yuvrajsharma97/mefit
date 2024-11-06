@@ -6,6 +6,7 @@ import { db } from "../../firebaseConfig";
 export const fetchMyCuratedPlan = createAsyncThunk(
   "myCuratedPlan/fetchMyCuratedPlan",
   async (userId, { rejectWithValue }) => {
+    
     if (!userId) {
       return rejectWithValue("User ID is not provided or authenticated");
     }

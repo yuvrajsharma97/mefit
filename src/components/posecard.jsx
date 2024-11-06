@@ -9,7 +9,7 @@ const PoseCard = ({ pose, poseId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sets, setSets] = useState(1);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const { isUserLoggedIn } = useAuth(); // Access user details from context
+  const { isUserLoggedIn,user } = useAuth(); // Access user details from context
 
   const dispatch = useDispatch();
   const { status, created, error } = useSelector(
@@ -41,7 +41,7 @@ const PoseCard = ({ pose, poseId }) => {
 
       dispatch(
         checkAndCreateCollection({
-          userId: isUserLoggedIn.uid,
+          userId: user.uid,
           newPlan,
         })
       );

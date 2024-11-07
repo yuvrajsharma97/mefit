@@ -31,6 +31,7 @@ const PoseCard = ({ pose, poseId }) => {
 
       const newPlan = {
         collection: "myCuratedPlan",
+        poseSubCollection: pose.collection,
         id: pose.id,
         noOfSets: sets,
         image: pose.image,

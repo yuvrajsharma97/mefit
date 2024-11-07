@@ -12,7 +12,9 @@ const MyCuratedPlanList = () => {
   );
 
   const [componentLoading, setComponentLoading] = useState(true);
-  const myPlanPoses = plans.plans
+  const myPlanPoses = plans.plans;
+
+  
   const { user } = useAuth();
 
   useEffect(() => {
@@ -35,11 +37,12 @@ const MyCuratedPlanList = () => {
     return <p>Error: {error}</p>;
   }
 
-  if (myPlanPoses.length === 0) {
-    return <p>No plans found.</p>;
+  if (myPlanPoses) {
+    if (myPlanPoses.length === 0) {
+      return <p>No plans found.</p>;
+    }
   }
 
-  console.log("Plans:", myPlanPoses);
   
   return (
     <React.Fragment>

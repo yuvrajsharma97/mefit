@@ -17,11 +17,9 @@ const MyPlanPoseCard = ({ pose }) => {
 
       {/* Pose Title and Description */}
       <div className="flex justify-between items-start mb-2">
-        <h2 className="text-xl font-semibold text-accent">{pose.poseTitle}</h2>
+        <h2 className="text-xl font-semibold text-accent">{pose.name}</h2>
       </div>
-      <p className="text-sm text-accentText mb-2">
-        {pose.poseShortDescription}
-      </p>
+      <p className="text-sm text-accentText mb-2">{pose.short_description}</p>
 
       {/* Instruction */}
       {/* <p className="text-sm text-accentText mb-4 truncate ">

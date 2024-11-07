@@ -12,12 +12,14 @@ export const checkAndCreateCollection = createAsyncThunk(
   "myCuratedPlan/checkAndCreateCollection",
   async ({ userId, newPlan }, { rejectWithValue }) => {
     const docRef = doc(db, "users", userId, "userData", "myCuratedPlan");
-
+    console.log(newPlan);
+    
     try {
       // Check if the collection exists
       const docSnap = await getDoc(docRef);
       const newDocument = {
         collection: newPlan.collection,
+        poseSubCollection: newPlan.poseSubCollection,
         id: newPlan.id,
         noOfSets: newPlan.noOfSets,
         image: newPlan.image,

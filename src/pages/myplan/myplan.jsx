@@ -4,6 +4,7 @@ import { fetchMyCuratedPlan } from "../../features/datafetch/myplandata";
 import MyPlanPoseCard from "../../components/myplanposecard";
 import { useAuth } from "../../context/authContext";
 import Loader from "../../components/loader";
+import Navbar from "../../components/navbar";
 
 const MyCuratedPlanList = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,11 @@ const MyCuratedPlanList = () => {
   
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -46,13 +51,20 @@ const MyCuratedPlanList = () => {
   
   return (
     <React.Fragment>
+      <Navbar />
+
       {componentLoading ? (
         <Loader />
       ) : (
-        <div className="flex flex-wrap gap-4">
-          {myPlanPoses.map((pose) => (
-            <MyPlanPoseCard key={pose.id} pose={pose} />
-          ))}
+        <div className="min-h-screen bg-bgDarkest text-white flex flex-col items-center px-4 py-12 md:py-[8rem]">
+          <h1 className="text-4xl font-bold underline text-accent my-8">
+            Your Curated Plan
+          </h1>
+          <div className="flex flex-wrap gap-4">
+            {myPlanPoses.map((pose) => (
+              <MyPlanPoseCard key={pose.id} pose={pose} />
+            ))}
+          </div>
         </div>
       )}
     </React.Fragment>

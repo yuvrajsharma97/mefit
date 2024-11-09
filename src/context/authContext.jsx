@@ -50,6 +50,7 @@ const AuthProvider = ({ children }) => {
 
   const value = {
     isUserLoggedIn,
+    setIsUserLoggedIn,
     user,
     login,
     logout,

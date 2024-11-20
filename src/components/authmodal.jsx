@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import toast, { Toaster } from "react-hot-toast";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -8,14 +9,19 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebaseConfig";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../context/authContext";
-
-const db = getFirestore();
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setUserDetails,
+  fetchUserDetails,
+} from "../features/userProfile/userDetailsSlice";
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [loginState, setLoginState] = useState(true);
   const { setIsUserLoggedIn } = useAuth();
+  const dispatch = useDispatch();
+
+  const { user, loading, error } = useSelector((state) => state.userDetails);
 
   useEffect(() => {
     Aos.init();
@@ -32,25 +38,24 @@ const AuthModal = ({ isOpen, onClose }) => {
         email,
         password
       );
-
-      // Save additional data (Name) to Firestore
-      await setDoc(doc(db, "users", userCredential.user.uid), {
-        name: name,
-        email: email,
-      });
-
       await sendEmailVerification(userCredential.user);
+
       setIsUserLoggedIn(userCredential.user);
-      console.log("User signed up:", userCredential.user);
-      if(userCredential.user) {
-        localStorage.setItem(
-          "userIsLoggedIn",
-          JSON.stringify(userCredential.user)
-        );
-      }
-      console.log("Verification email sent.");
+
+      const userId = userCredential.user.uid;
+      await dispatch(setUserDetails({ userId, name, email }));
+      dispatch(fetchUserDetails({ userId }));
+      localStorage.setItem(
+        "userIsLoggedIn",
+        JSON.stringify(userCredential.user)
+      );
+
+      setLoginState(true);
+      // onClose();
+      toast.success("User signed up successfully. Verification email sent!");
     } catch (error) {
       console.error("Error signing up:", error.message);
+      toast.error(`Sign-up failed: ${error.message}`);
     }
   };
 
@@ -59,21 +64,24 @@ const AuthModal = ({ isOpen, onClose }) => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
 
-      // Optionally, save user info to Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        name: user.displayName,
-        email: user.email,
-      });
+      const userId = user.uid;
+      dispatch(
+        setUserDetails({ userId, name: user.displayName, email: user.email })
+      );
 
-      setIsUserLoggedIn(user); 
-      console.log("User signed up:", user);
-      if (user) {
-        localStorage.setItem("userIsLoggedIn", JSON.stringify(user));
-      }
-      console.log("User signed up with Google:", user);
-      onClose();
+      localStorage.setItem("userIsLoggedIn", JSON.stringify(user));
+      const userNameCredentials = user.providerData[0].displayName;
+      const userEmailCredentials = user.providerData[0].email;
+
+      setIsUserLoggedIn({
+        name: userNameCredentials,
+        email: userEmailCredentials,
+      });
+      // onClose();
+      toast.success("Signed up with Google successfully!");
     } catch (error) {
       console.error("Error with Google signup:", error.message);
+      toast.error(`Google signup failed: ${error.message}`);
     }
   };
 
@@ -85,17 +93,16 @@ const AuthModal = ({ isOpen, onClose }) => {
     const confirmPassword = event.target.confirmPassword.value;
 
     if (password.length < 6 || confirmPassword.length < 6) {
-      console.error("Password must be at least 6 characters long.");
+      toast.error("Password must be at least 6 characters long.");
       return;
     }
 
     if (password !== confirmPassword) {
-      console.error("Passwords do not match.");
+      toast.error("Passwords do not match.");
       return;
     }
 
     await signUp(name, email, password);
-    onClose();
   };
 
   const handleLogin = async (event) => {
@@ -109,17 +116,21 @@ const AuthModal = ({ isOpen, onClose }) => {
         email,
         password
       );
-      setIsUserLoggedIn(userCredential.user); // Update context with logged-in user
-      console.log("User logged in:", userCredential.user);
-      if (userCredential.user) {
-        localStorage.setItem(
-          "userIsLoggedIn",
-          JSON.stringify(userCredential.user)
-        );
-      }
-      onClose();
+      const userId = userCredential.user.uid;
+
+      dispatch(fetchUserDetails({ userId }));
+
+      setIsUserLoggedIn(userCredential.user);
+      localStorage.setItem(
+        "userIsLoggedIn",
+        JSON.stringify(userCredential.user)
+      );
+
+      toast.success("Logged in successfully!");
+      // onClose();
     } catch (error) {
       console.error("Error logging in:", error.message);
+      toast.error(`Login failed: ${error.message}`);
     }
   };
 
@@ -127,6 +138,7 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
+      <Toaster position="top-center" reverseOrder={false} /> {/* Add Toaster */}
       <dialog id="my_modal_3" className="modal modal-open">
         <div className="modal-box">
           <form method="dialog">

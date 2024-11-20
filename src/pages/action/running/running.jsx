@@ -15,6 +15,7 @@ const Running = () => {
     if (runningExercises.length === 0) {
       dispatch(fetchRunningExercises());
     }
+    
   }, [dispatch, runningExercises.length]);
 
   if (loading) {
@@ -26,24 +27,33 @@ const Running = () => {
   }
 
   if (error) {
-    return <p>Error loading running exercises: {error}</p>;
+    return (
+       <div className="min-h-screen bg-bgDarkest text-white flex flex-col items-center px-4 py-12 md:py-[8rem]">
+      <h1 className="text-4xl font-bold underline text-accent">
+        Error loading running exercises: {error}
+      </h1>
+    </div>);
   }
 
+  console.log(runningExercises);
+  
   // Categorize exercises
   const sprinting = runningExercises.filter(
-    (exercise) => exercise.category === "sprinting"
+    (exercise) => exercise.collection === "running_sprinting"
   );
+  console.log(sprinting);
+  
   const longDistance = runningExercises.filter(
-    (exercise) => exercise.category === "longDistance"
+    (exercise) => exercise.collection === "running_longDistance"
   );
   const speedWork = runningExercises.filter(
-    (exercise) => exercise.category === "speedWork"
+    (exercise) => exercise.collection === "running_speedWork"
   );
   const enduranceRunning = runningExercises.filter(
-    (exercise) => exercise.category === "enduranceRunning"
+    (exercise) => exercise.collection === "running_enduranceRunning"
   );
   const recoveryRuns = runningExercises.filter(
-    (exercise) => exercise.category === "recoveryRuns"
+    (exercise) => exercise.collection === "running_recoveryRuns"
   );
 
   return (

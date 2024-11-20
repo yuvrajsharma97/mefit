@@ -6,6 +6,7 @@ import bodyweightExercisesSlice from "../features/datafetch/bodyweight";
 import weightTrainingExercisesSlice from "../features/datafetch/weighttrainning";
 import runningExercisesSlice from "../features/datafetch/running";
 import myCuratedPlanFetchSlice from "../features/datafetch/myplandata";
+import userDetailsReducer from "../features/userProfile/userDetailsSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     weightTrainingExercises: weightTrainingExercisesSlice,
     runningExercises: runningExercisesSlice,
     myCuratedPlanfetch: myCuratedPlanFetchSlice,
+    userDetails: userDetailsReducer,
   },
 });
 

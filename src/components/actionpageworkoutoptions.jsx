@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  YogaImage,
-  WeightliftingImage,
-  RunningImage,
-  BodyweightImage,
-} from "./assetsimport";
 import { useDispatch } from "react-redux";
 import { setActionDisplay } from "../features/actionPage/actionDisplaySlice";
 

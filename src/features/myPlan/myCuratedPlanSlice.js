@@ -12,7 +12,7 @@ export const checkAndCreateCollection = createAsyncThunk(
   "myCuratedPlan/checkAndCreateCollection",
   async ({ userId, newPlan }, { rejectWithValue }) => {
     const docRef = doc(db, "users", userId, "userData", "myCuratedPlan");
-    console.log(newPlan);
+  
     
     try {
       // Check if the collection exists

@@ -12,11 +12,14 @@ export const fetchRunningExercises = createAsyncThunk(
     }
 
     // Fetch data from the 'runningexercises' collection
-    const querySnapshot = await getDocs(collection(db, "runningexercises"));
+    const querySnapshot = await getDocs(collection(db, "runningexcercises"));
+    
     const fetchedRunningExercises = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+    
+    
     return fetchedRunningExercises;
   }
 );

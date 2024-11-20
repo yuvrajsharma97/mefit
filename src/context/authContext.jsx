@@ -1,4 +1,5 @@
 // src/contexts/AuthContext.js
+import { use } from "framer-motion/client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -7,7 +8,8 @@ export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [user, setUser] = useState(null); // Start with null for clarity
+  const [user, setUser] = useState(null);
+  const [userDetailsState, setUserDetailsState] = useState({name: "", email: ""});
 
   useEffect(() => {
     // Retrieve and parse the user data from localStorage only once on mount
@@ -34,6 +36,20 @@ const AuthProvider = ({ children }) => {
     setIsUserLoggedIn(!!user); // Update login status based on user presence
   }, [user]); // Dependency array ensures this runs whenever 'user' changes
 
+  useEffect(() => {
+    const userDetailsLocal = localStorage.getItem("userDetails");
+    if (userDetailsLocal) {
+      try {
+        const parsedUserDetails = JSON.parse(userDetailsLocal);
+        console.log("Parsed user details:", parsedUserDetails);
+        setUserDetailsState(parsedUserDetails);
+      } catch (error) {
+        console.error("Failed to parse user details from localStorage:", error);
+        setUserDetailsState({ name: "", email: "" });
+      }
+    }
+  }, [user]);
+
   const login = (userData) => {
     setUser(userData);
     setIsUserLoggedIn(true);
@@ -54,6 +70,8 @@ const AuthProvider = ({ children }) => {
     user,
     login,
     logout,
+    userDetailsState,
+    setUserDetailsState,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

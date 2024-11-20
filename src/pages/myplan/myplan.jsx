@@ -28,31 +28,35 @@ const MyCuratedPlanList = () => {
   ];
 
   useEffect(() => {
-    const groupedItems = myPlanPoses.reduce((acc, item) => {
-      const matchedKeyword = keywords.find(
-        (keyword) =>
-          item.poseSubCollection && item.poseSubCollection.includes(keyword)
-      );
+    const groupedItems = myPlanPoses.reduce(
+      (acc, item) => {
+        const matchedKeyword = keywords.find(
+          (keyword) =>
+            item.poseSubCollection && item.poseSubCollection.includes(keyword)
+        );
+        const key = matchedKeyword || "others";
 
-      const key = matchedKeyword || "others";
+        if (!acc[key]) {
+          acc[key] = [];
+        }
 
-      // Initialize the group if it doesn't exist
-      if (!acc[key]) {
-        acc[key] = [];
+        acc[key].push(item);
+
+        return acc;
+      },
+      {
+        bodyweightexercises: [],
+        running: [],
+        weighttraining: [],
+        yogaPoses: [],
       }
+    );
 
-      // Add the item to the matched group
-      acc[key].push(item);
-
-      return acc;
-    }, {});
-
-    // Update each state based on grouped items
     setBodyweightexercisesArray(groupedItems.bodyweightexercises || []);
     setRunningArray(groupedItems.running || []);
     setWeighttrainingArray(groupedItems.weighttraining || []);
     setYogaPosesArray(groupedItems.yogaPoses || []);
-  }, [myPlanPoses]); // Runs whenever myPlanPoses updates
+  }, [JSON.stringify(myPlanPoses)]); // Serialize `myPlanPoses` to avoid constant changes
 
   useEffect(() => {
     if (user) {
@@ -61,7 +65,17 @@ const MyCuratedPlanList = () => {
   }, [user]);
 
   if (loading) return <Loader />;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return (
+    <React.Fragment>
+      <Navbar />
+      <p></p>
+      <div className="min-h-screen bg-bgDarkest text-white flex flex-col items-center px-4 py-12 md:py-[8rem]">
+        <h1 className="text-4xl font-bold underline text-accent my-8">
+          {error}
+        </h1>
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <React.Fragment>

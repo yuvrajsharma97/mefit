@@ -19,7 +19,7 @@ export const fetchMyCuratedPlan = createAsyncThunk(
       const docSnap = await getDoc(userDocRef);
 
       if (!docSnap.exists()) {
-        return rejectWithValue("No curated plan found.");
+        return rejectWithValue("You have not curated a plan yet.");
       }
 
       // Return the data of the 'myCuratedPlan' document

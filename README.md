@@ -66,6 +66,10 @@
 - [Node.js](https://nodejs.org/) (v16 or higher recommended)
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 
+---
+
+## Project Structure
+
 mefit/<br>
 ├── public/               # Static assets<br>
 ├── src/                  # Main source code<br>

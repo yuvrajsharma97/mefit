@@ -4,6 +4,12 @@
 
 ---
 
+## Live Demo
+
+Check out the live application here: [MeFit](https://mefit-virid.vercel.app)
+
+---
+
 ## Features
 
 - **Wide Range of Workouts**: Browse through an extensive list of exercises.
@@ -71,15 +77,14 @@
 ## Project Structure
 
 mefit/<br>
-├── public/               # Static assets<br>
-├── src/                  # Main source code<br>
-│   ├── components/       # Reusable components<br>
-│   ├── features/         # Redux slices and application features<br>
-│   ├── pages/            # Page components<br>
-│   ├── styles/           # Global and Tailwind CSS styles<br>
-│   ├── App.jsx           # Main app component<br>
-│   ├── main.jsx          # Application entry point<br>
-├── package.json          # Project metadata and dependencies<br>
-├── vite.config.js        # Vite configuration<br>
-├── tailwind.config.js    # Tailwind CSS configuration<br>
-
+├── public/ # Static assets<br>
+├── src/ # Main source code<br>
+│ ├── components/ # Reusable components<br>
+│ ├── features/ # Redux slices and application features<br>
+│ ├── pages/ # Page components<br>
+│ ├── styles/ # Global and Tailwind CSS styles<br>
+│ ├── App.jsx # Main app component<br>
+│ ├── main.jsx # Application entry point<br>
+├── package.json # Project metadata and dependencies<br>
+├── vite.config.js # Vite configuration<br>
+├── tailwind.config.js # Tailwind CSS configuration<br>

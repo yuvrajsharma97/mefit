@@ -125,7 +125,7 @@ const Home = () => {
           stay inspired.
         </p>
         <a
-          href="#signup"
+          href="/profile"
           className="bg-background text-bgDarkest py-4 px-8 rounded-full font-semibold transition-transform transform hover:scale-105">
           Sign Up Now
         </a>

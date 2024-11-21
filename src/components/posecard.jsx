@@ -102,7 +102,7 @@ const PoseCard = ({ pose, poseId }) => {
               <h3 className="text-lg font-bold text-accent">{pose.name}</h3>
               <div
                 className="h-96 rounded bg-center mb-4"
-                style={{ backgroundImage: `url(${pose.image})` }}></div>
+                style={{ backgroundImage: `url(${pose.image})`, backgroundSize: "contain", backgroundRepeat: "no-repeat"}}></div>
               <p className="py-4 text-accentText">{pose.short_description}</p>
               <details className="group">
                 <summary className="cursor-pointer text-accent">

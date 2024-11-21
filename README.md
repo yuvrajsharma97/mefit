@@ -66,15 +66,16 @@
 - [Node.js](https://nodejs.org/) (v16 or higher recommended)
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 
-mefit/
-├── public/           # Static assets
-├── src/
-│   ├── components/   # Reusable components
-│   ├── features/     # Redux slices and features
-│   ├── pages/        # Application pages
-│   ├── styles/       # Tailwind and global styles
-│   ├── App.jsx       # Main app component
-│   ├── main.jsx      # App entry point
-├── package.json
-├── vite.config.js
-└── tailwind.config.js
+mefit/<br>
+├── public/               # Static assets<br>
+├── src/                  # Main source code<br>
+│   ├── components/       # Reusable components<br>
+│   ├── features/         # Redux slices and application features<br>
+│   ├── pages/            # Page components<br>
+│   ├── styles/           # Global and Tailwind CSS styles<br>
+│   ├── App.jsx           # Main app component<br>
+│   ├── main.jsx          # Application entry point<br>
+├── package.json          # Project metadata and dependencies<br>
+├── vite.config.js        # Vite configuration<br>
+├── tailwind.config.js    # Tailwind CSS configuration<br>
+
